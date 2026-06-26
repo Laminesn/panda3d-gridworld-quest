@@ -14,7 +14,6 @@ sys.path.insert(0, os.path.join(os.path.dirname(__file__), "..", "scripts"))
 from validate_level import validate_level
 
 
-# ── Shared fixture ─────────────────────────────────────────────────────────────
 
 GOOD = {
     "grid_size":    [10, 10],
@@ -25,7 +24,6 @@ GOOD = {
 }
 
 
-# ── Tests ──────────────────────────────────────────────────────────────────────
 
 def test_valid_level():
     """A well-formed, solvable level should pass all checks."""

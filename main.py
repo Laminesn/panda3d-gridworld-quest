@@ -32,13 +32,11 @@ from panda3d.core import (
     TextNode,
 )
 
-# ── Grid constants ─────────────────────────────────────────────────────────────
 CELL = 1.0       # world units per grid square
 MOVE_DELAY = 0.18   # seconds before key-held repeat kicks in
 MOVE_REPEAT = 0.11  # seconds between repeat moves while key is held
 
 
-# ── Geometry helper ────────────────────────────────────────────────────────────
 
 def make_box(width: float = 1.0, depth: float = 1.0, height: float = 1.0) -> NodePath:
     """
@@ -82,7 +80,6 @@ def make_box(width: float = 1.0, depth: float = 1.0, height: float = 1.0) -> Nod
     return NodePath(node)
 
 
-# ── Game class ─────────────────────────────────────────────────────────────────
 
 class GridworldGame(ShowBase):
     """Main game class. Loads a JSON level, builds the 3D scene, handles input."""
@@ -118,7 +115,6 @@ class GridworldGame(ShowBase):
 
         self.taskMgr.add(self._update, "update")
 
-    # ── Scene setup ────────────────────────────────────────────────────────────
 
     def _setup_lights(self):
         """One directional 'sun' light plus a soft ambient fill."""
@@ -206,7 +202,6 @@ class GridworldGame(ShowBase):
         self.accept("escape", sys.exit)
         self.accept("r", self._restart)
 
-    # ── Input handling ─────────────────────────────────────────────────────────
 
     def _key_down(self, key: str):
         """Move immediately on first press, then arm the repeat timer."""
@@ -245,7 +240,6 @@ class GridworldGame(ShowBase):
         if (nx, ny) == self.goal:
             self._win()
 
-    # ── Game loop ──────────────────────────────────────────────────────────────
 
     def _update(self, task):
         """Per-frame: update HUD timer and handle held-key repeat movement."""
@@ -268,7 +262,6 @@ class GridworldGame(ShowBase):
 
         return task.cont
 
-    # ── Win / restart ──────────────────────────────────────────────────────────
 
     def _win(self):
         self.game_over = True
@@ -292,7 +285,6 @@ class GridworldGame(ShowBase):
         os.execv(sys.executable, [sys.executable] + sys.argv)
 
 
-# ── Entry point ────────────────────────────────────────────────────────────────
 
 if __name__ == "__main__":
     level = sys.argv[1] if len(sys.argv) > 1 else "levels/level_01.json"

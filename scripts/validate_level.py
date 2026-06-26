@@ -25,7 +25,6 @@ def validate_level(data: dict) -> tuple[bool, list[str]]:
     """
     errors: list[str] = []
 
-    # ── 1. Required fields ────────────────────────────────────────────────────
     required = ("grid_size", "player_start", "goal", "coins", "obstacles")
     for field in required:
         if field not in data:
@@ -40,7 +39,6 @@ def validate_level(data: dict) -> tuple[bool, list[str]]:
     coins       = [tuple(c) for c in data["coins"]]
     obstacles   = [tuple(o) for o in data["obstacles"]]
 
-    # ── 2. Bounds check ───────────────────────────────────────────────────────
     named_positions = (
         [("player_start", start), ("goal", goal)]
         + [("coin", c) for c in coins]
@@ -52,7 +50,6 @@ def validate_level(data: dict) -> tuple[bool, list[str]]:
                 f"{label} position {(x, y)} is outside the {gw}x{gh} grid"
             )
 
-    # ── 3. Overlap check ──────────────────────────────────────────────────────
     occupied: dict[tuple, str] = {}
     for label, pos in named_positions:
         if pos in occupied:
@@ -62,7 +59,6 @@ def validate_level(data: dict) -> tuple[bool, list[str]]:
         else:
             occupied[pos] = label
 
-    # ── 4. BFS reachability ───────────────────────────────────────────────────
     if not errors:  # skip if earlier checks already failed
         obs_set = set(obstacles)
         visited = {start}
@@ -94,7 +90,6 @@ def validate_level(data: dict) -> tuple[bool, list[str]]:
     return len(errors) == 0, errors
 
 
-# ── CLI ────────────────────────────────────────────────────────────────────────
 
 if __name__ == "__main__":
     path = sys.argv[1] if len(sys.argv) > 1 else "levels/level_01.json"
