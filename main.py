@@ -1,6 +1,6 @@
 """
 Panda3D AI Game Task: Gridworld Quest
---------------------------------------
+
 A Python/Panda3D mini-game for AI training task design. The player navigates
 a 3D gridworld, collects coins, avoids walls, and reaches the goal tile.
 
@@ -273,11 +273,12 @@ class GridworldGame(ShowBase):
     def _win(self):
         self.game_over = True
         elapsed = time.time() - self.start_time
-        total_coins = len([p for p in self.coin_nodes]) + self.score
+        # remaining coins still on the board + already collected = original total
+        total_coins = len(self.coin_nodes) + self.score
         OnscreenText(
             text=(
                 f"Level Complete!\n\n"
-                f"Coins collected: {self.score} / {total_coins + self.score}\n"
+                f"Coins collected: {self.score} / {total_coins}\n"
                 f"Time: {elapsed:.1f}s\n\n"
                 f"R to play again    Esc to quit"
             ),
